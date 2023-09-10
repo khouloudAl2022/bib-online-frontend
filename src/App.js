@@ -1,71 +1,56 @@
 import { Suspense } from "react";
-import { RouterProvider } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import Navbar from "./Pages/Navigation";
+import Home from "./Pages/Home";
+import Page404 from "./components/Page404";
 import { ToastContainer } from "react-toastify";
+import Register from "./Pages/Register";
+import Login from "./Pages/Login";
+import Navigation from "./Pages/Navigation";
 
-const adminRouting = adminRoutes.map((route) => {
-  return (
-    route.element && {
-      path: route.path,
-      element: <route.element />,
-      exact: route.exact,
-      name: route.name
-    }
-  )
-})
-const clientRouting = clientRoutes.map((route) => {
-  return (
-    route.element && {
-      path: route.path,
-      element: <route.element />,
-      exact: route.exact,
-      name: route.name
-    }
-  )
-})
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <ClientLayout />,
-    children: clientRouting
-  },
-  {
-    path: "/register",
-    element: <Register />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: '/admin',
-    element: <PrivateRoute><Layout /></PrivateRoute>,
-    children: adminRouting
-  },
-  {
-    path: '*',
-    element: <Page404 />
-  },
+// const Loading = (
+//   <div className="d-flex justify-content-center vh-100 align-items-center">
+//     <div className="spinner-grow text-info" role="status">
+//       <span className="visually-hidden">Loading...</span>
+//     </div>
+//   </div>
+// );
 
-]);
 function App() {
-  return <div className="App">
- <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
-      <Suspense fallback={Loading}>
+  return (
+    <div className="App">
+     
+      {/* <Suspense fallback={Loading}>
         <RouterProvider router={router} fallbackElement={Loading} />
+      </Suspense> */}
+      <BrowserRouter>
+        <div className="App">
+          <Navigation />
+          <main className="container">
+            <Routes>
+              <Route path="/" exact element={<Home />} />
+              {/* <Route path="/about/*" element={<About />}>
+              <Route
+                path="hello"
+                element={
+                  <div>
+                    <br /> <br /> <hr /> <br />
+                    <p>Hellooooooooo</p>
+                  </div>
+                }
+              />
+            </Route> */}
+              <Route path="/login" element={<Login />} />
 
-      </Suspense>
-  </div>;
+              <Route path="/register" element={<Register />} />
+
+              <Route path="*" element={<Page404 />} />
+            </Routes>
+          </main>
+        </div>
+      </BrowserRouter>
+    </div>
+  );
 }
 
 export default App;
