@@ -1,9 +1,9 @@
 import React from "react";
 import { Button, Card } from "react-bootstrap";
 
-const CardBook = ({ book }) => {
+const CardBook = ({ book, downloadFile }) => {
   return (
-    <div>
+    <div key={book._id}>
       <Card style={{ width: "18rem" }}>
         <Card.Img
           variant="top"
@@ -12,7 +12,9 @@ const CardBook = ({ book }) => {
         <Card.Body>
           <Card.Title>{book.title}</Card.Title>
           <Card.Text>{book.desc}</Card.Text>
-          <Button variant="primary">Download</Button>
+          <Button variant="primary" onClick={() => downloadFile(book._id)}>
+            Download
+          </Button>
         </Card.Body>
       </Card>
     </div>
